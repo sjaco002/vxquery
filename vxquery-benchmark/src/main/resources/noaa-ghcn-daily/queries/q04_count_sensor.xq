@@ -15,11 +15,15 @@
    specific language governing permissions and limitations
    under the License. :)
 
-(: XQuery Join Query :)
-(: Count all the weather stations for Washington state.                       :)
+(:
+XQuery Join Query
+-------------------
+Count all the weather sensor readings on 1976-07-04.
+:)
 count(
-    let $station_collection := "/tmp/1.0_partition_ghcnd_all_xml/stations"
-    for $s in collection($station_collection)/stationCollection/station
-    where (some $x in $s/locationLabels satisfies ($x/type eq "ST" and fn:upper-case(fn:data($x/displayName)) eq "WASHINGTON"))
-    return $s
+    let $sensor_collection := "/tmp/1.0_partition_ghcnd_all_xml/sensors"
+    for $r in collection($sensor_collection)/dataCollection/data
+    let $date := xs:date(fn:substring(xs:string(fn:data($r/date)), 0, 11))
+    where $date eq xs:date("1976-07-04")
+    return $r
 )

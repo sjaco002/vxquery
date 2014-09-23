@@ -16,12 +16,17 @@
    under the License. :)
 
 (: XQuery Join Query :)
-(: Count all the weather sensor readings on 1976-07-04.                       :)
-count(
+(: Find the highest recorded temperature (TMAX) for each station for each     :)
+(: day over the year 2000.                                                    :)
+fn:count(
+    let $station_collection := "/tmp/1.0_partition_ghcnd_all_xml/stations"
+    for $s in collection($station_collection)/stationCollection/station
+    
     let $sensor_collection := "/tmp/1.0_partition_ghcnd_all_xml/sensors"
     for $r in collection($sensor_collection)/dataCollection/data
-        
-    let $date := xs:date(fn:substring(xs:string(fn:data($r/date)), 0, 11))
-    where $date eq xs:date("1976-07-04")
+    
+    where $s/id eq $r/station
+        and $r/dataType eq "TMAX" 
+        and fn:year-from-dateTime(xs:dateTime(fn:data($r/date))) eq 2000
     return $r
 )
