@@ -23,7 +23,7 @@ CCHOST=$1
 CCPORT=$2
 J_OPTS=$3
 
-#Export JAVA_HOME
+# Export JAVA_HOME
 export JAVA_HOME=${JAVA_HOME}
 
 # java opts added parameters
@@ -46,5 +46,5 @@ then
     CC_OPTIONS=" ${CC_OPTIONS} -cluster-net-port ${CCPORT} "
 fi
 
-#Launch hyracks cc script without toplogy
+# Launch hyracks cc script without toplogy
 ${VXQUERY_HOME}/vxquery-server/target/appassembler/bin/vxquerycc ${CC_OPTIONS} &> ${CCLOGS_DIR}/cc_$(date +%Y%m%d%H%M).log &
