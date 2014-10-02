@@ -17,5 +17,4 @@
 # limitations under the License.
 #
 
-bin/start-dfs.sh
-bin/start-mapred.sh
+bin/start-all.sh

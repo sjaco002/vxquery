@@ -16,4 +16,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-bin/hadoop namenode -format
+hadoop namenode -format

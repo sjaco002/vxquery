@@ -14,8 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-select (r)
-from r in source(xml, "sample_xml/gsn_sensors.xml", {"data"})
-where text(r.dataType) = "AWND"
-    and toFloat(text(r.value)) > 491.744
+count(
+    select (toInt(text(rtmax.value))-toInt(text(rtmin.value)))
+    from rtmax in source(xml, args[0], {"data"}),
+        rtmin in source(xml, args[0], {"data"})
+    where text(rtmax.date) = text(rtmin.date)
+        and text(rtmax.station) = text(rtmin.station)
+        and text(r.dataType) = "TMAX"
+        and text(r.dataType) = "TMIN"
+)
 ;

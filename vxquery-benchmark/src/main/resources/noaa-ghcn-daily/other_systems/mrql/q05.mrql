@@ -14,10 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-count(
-    select (r.date, r.value)
-    from r in source(xml, "sample_xml/gsn_sensors.xml", {"data"})
-    where toInt(substring(text(r.date), 0, 4)) = 2000
-        and text(r.dataType) = "TMAX"
-)
+min(
+    select (toInt(text(sensors.value)))
+    from sensors in source(xml, args[0], {"data"}),
+        stations in source(xml, args[1], {"station"}),
+        l in stations.locationLabels
+    where text(stations.id) = text(sensors.station) 
+        and toInt(substring(text(sensors.date), 0, 4)) = 2001
+        and text(sensors.dataType) = "TMIN"
+        and text(l.id) = "FIPS:US"
+) / 10
 ;

@@ -17,19 +17,16 @@
 # limitations under the License.
 #
 
-# Examples
-# run_mrql_tests.sh mrql_all/ 1 2
-
 NODES=${2}
 REPEAT=${3}
-DATASET="all"
+DATASET="hcn"
 
 
 for j in $(find ${1} -name '*q??.mrql')
 do
     date
     echo "Running MRQL query: ${j}"
-    time for i in {1..${REPEAT}}; do ~/mrql/incubator-mrql/bin/mrql -dist -nodes ${NODES} ${j} ${DATASET}/sensors.xml ${DATASET}/stations.xml >> ~/disk1/weather_data/mrql/query_logs/$(basename "${j}").log 2>&1; done; 
+    time for i in {1..${REPEAT}}; do ~/mrql/incubator-mrql/bin/mrql -dist -nodes ${NODES} ${j} >> ~/disk1/weather_data/mrql/query_logs/$(basename "${j}").log 2>&1; done; 
 done
 
 

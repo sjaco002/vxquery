@@ -17,5 +17,4 @@
 # limitations under the License.
 #
 
-bin/stop-mapred.sh
-bin/stop-dfs.sh
+bin/stop-all.sh

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 select (r)
-from r in source(xml, "sample_xml/nano_sensors.xml", {"data"})
-where text(r.dataType) = "AWND"
-    and toFloat(text(r.value)) > 491.744
+from r in source(xml, args[0], {"data"})
+where text(r.date) = "1976-07-04T00:00:00.000"
+  and text(r.dataType) = "TMAX"
 ;

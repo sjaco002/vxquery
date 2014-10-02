@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-select (r)
-from r in source(xml, "sample_xml/gsn_sensors.xml", {"data"})
-where text(r.station) = "GHCND:USW00012836"
-    and toInt(substring(text(r.date), 0, 4)) >= 2003
-    and toInt(substring(text(r.date), 5, 7)) = 12
-    and toInt(substring(text(r.date), 8, 10)) = 25
+count(
+    select (t)
+    from t in source(xml, args[1], {"station"}),
+        l in t.locationLabels
+    where text(l.id) = "FIPS:US"
+)
 ;

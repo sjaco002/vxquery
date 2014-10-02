@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-select (r)
-from r in source(xml, "sample_xml/gsn_sensors.xml", {"data"})
-where text(r.date) = "1976-07-04T00:00:00.000"
-  and text(r.dataType) = "TMAX"
+max(
+    select (toInt(text(r.value)))
+    from r in source(xml, args[0], {"data"})
+    where text(r.dataType) = "TMAX"
+) / 10
 ;

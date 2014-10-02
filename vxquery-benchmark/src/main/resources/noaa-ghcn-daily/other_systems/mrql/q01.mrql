@@ -14,10 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-count(
-    select (toInt(text(r.value)))
-    from r in source(xml, "sample_xml/gsn_sensors.xml", {"data"})
-    where toInt(substring(text(r.date), 0, 4)) = 2001
-        and text(r.dataType) = "TMIN"
-)
+select (r)
+from r in source(xml, args[0], {"data"})
+where text(r.dataType) = "AWND"
+    and toFloat(text(r.value)) > 491.744
 ;

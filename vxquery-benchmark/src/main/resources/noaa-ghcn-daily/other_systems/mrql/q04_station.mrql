@@ -14,14 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-min(
-    select (toFloat(text(sensors.value)))
-    from sensors in source(xml, "sample_xml/nano_sensors.xml", {"data"}),
-        stations in source(xml, "sample_xml/nano_stations.xml", {"station"}),
-        l in stations.locationLabels
-    where text(stations.id) = text(sensors.station) 
-        and toInt(substring(text(sensors.date), 0, 4)) = 2001
-        and text(sensors.dataType) = "TMIN"
-        and text(l.id) = "FIPS:US"
-) / 10
+count(
+    select (r)
+    from t in source(xml, args[1], {"station"}),
+        l in t.locationLabels
+    where text(l.displayName) = "WASHINGTON"
+)
 ;

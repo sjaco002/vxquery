@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 count(
-    select (rtmax)
-    from rtmax in source(xml, "sample_xml/gsn_sensors.xml", {"data"})
-    where text(r.dataType) = "TMAX"
+    select (t.displayName)
+    from t in source(xml, args[1], {"station"}),
+        l in t.locationLabels
+    where text(l.displayName) = "WASHINGTON"
 )
 ;

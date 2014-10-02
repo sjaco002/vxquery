@@ -14,13 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-count(
-    select (toInt(text(rtmax.value))-toInt(text(rtmin.value)))
-    from rtmax in source(xml, "sample_xml/gsn_sensors.xml", {"data"}),
-        rtmin in source(xml, "sample_xml/gsn_sensors.xml", {"data"})
-    where text(rtmax.date) = text(rtmin.date)
-        and text(rtmax.station) = text(rtmin.station)
-        and text(r.dataType) = "TMAX"
-        and text(r.dataType) = "TMIN"
-)
+select (sensors)
+from sensors in source(xml, args[0], {"data"}),
+    stations in source(xml, args[1], {"station"}),
+    l in stations.locationLabels
+where text(stations.id) = text(sensors.station) 
+    and text(sensors.date) = "1976-07-04T00:00:00.000"
+    and text(l.displayName) = "Washington"
 ;
