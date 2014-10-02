@@ -15,9 +15,11 @@
    specific language governing permissions and limitations
    under the License. :)
 
-(: XQuery Join Query :)
-(: Find the highest recorded temperature (TMAX) for each station for each     :)
-(: day over the year 2000.                                                    :)
+(:
+XQuery Join Query
+-------------------
+Find the highest recorded temperature (TMAX) for each station for each day over the year 2000.
+:)
 fn:count(
     let $station_collection := "/tmp/1.0_partition_ghcnd_all_xml/stations"
     for $s in collection($station_collection)/stationCollection/station

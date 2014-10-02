@@ -15,8 +15,11 @@
    specific language governing permissions and limitations
    under the License. :)
 
-(: XQuery Join Aggregate Query :)
-(: Count all sensor readings for TMIN in 2001.                                :)
+(: 
+XQuery Join Aggregate Query
+-------------------
+Count all sensor readings for TMIN in 2001.
+:)
 count(
     let $sensor_collection := "/tmp/1.0_partition_ghcnd_all_xml/sensors"
     for $r in collection($sensor_collection)/dataCollection/data
