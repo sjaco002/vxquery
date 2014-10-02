@@ -38,7 +38,11 @@ CCLOGS_DIR=${VXQUERY_HOME}/logs
 mkdir -p ${CCLOGS_DIR}
 
 # Set up the options for the cc.
-CC_OPTIONS=" -client-net-ip-address ${CCHOST} -client-net-port ${CCPORT} "
+CC_OPTIONS=" -client-net-ip-address ${CCHOST} "
+if [ ! -z "${CCPORT}" ]
+then
+    CC_OPTIONS=" ${CC_OPTIONS} -client-net-port ${CCPORT} "
+fi
 
 # Launch hyracks cc script without toplogy
 echo "${VXQUERY_HOME}/vxquery-server/target/appassembler/bin/vxqueryshutdown ${CC_OPTIONS} &> ${CCLOGS_DIR}/shutdown_$(date +%Y%m%d%H%M).log &"

@@ -43,7 +43,7 @@ mkdir -p ${CCLOGS_DIR}
 CC_OPTIONS=" -client-net-ip-address ${CCHOST} -cluster-net-ip-address ${CCHOST} "
 if [ ! -z "${CCPORT}" ]
 then
-    CC_OPTIONS=" ${CC_OPTIONS} -cluster-net-port ${CCPORT} "
+    CC_OPTIONS=" ${CC_OPTIONS} -client-net-port ${CCPORT} "
 fi
 
 # Launch hyracks cc script without toplogy

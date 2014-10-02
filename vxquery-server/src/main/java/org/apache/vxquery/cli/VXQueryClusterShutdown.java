@@ -35,8 +35,6 @@ public class VXQueryClusterShutdown {
         final CmdLineOptions opts = new CmdLineOptions();
         CmdLineParser parser = new CmdLineParser(opts);
 
-        System.err.println("prep");
-
         // parse command line options
         try {
             parser.parseArgument(args);
@@ -44,47 +42,32 @@ public class VXQueryClusterShutdown {
             parser.printUsage(System.err);
             return;
         }
-        System.err.println("read");
-        System.err.println(opts.clientNetIpAddress);
-        System.err.println(opts.clientNetPort);
         
         // give error message if missing arguments
-        if (opts.clientNetIpAddress == null || opts.clientNetPort == -1) {
+        if (opts.clientNetIpAddress == null) {
             parser.printUsage(System.err);
             return;
         }
-        System.err.println("ready");
         
-        IHyracksClientConnection hcc;
         try {
-            hcc = new HyracksConnection(opts.clientNetIpAddress, opts.clientNetPort);
-        } catch (Exception e) {
-            System.err.println("Unable to connect to the Hyracks cluster.");
-            System.err.println(e);
-            return;
-        }
-        
-        System.err.println("connected");
-        try {
+            IHyracksClientConnection hcc = new HyracksConnection(opts.clientNetIpAddress, opts.clientNetPort);
             hcc.stopCluster();
         } catch (Exception e) {
-            System.err.println("Unable to shutdown the Hyracks cluster.");
+            System.err.println("Unable to connect and shutdown the Hyracks cluster.");
             System.err.println(e);
             return;
         }
-        
-        System.err.println("done");
     }
 
     /**
      * Helper class with fields and methods to handle all command line options
      */
     private static class CmdLineOptions {
-        @Option(name = "-client-net-ip-address", usage = "IP Address of the ClusterController")
-        private String clientNetIpAddress = null;
+        @Option(name = "-client-net-ip-address", usage = "IP Address of the ClusterController", required = true)
+        private String clientNetIpAddress;
 
         @Option(name = "-client-net-port", usage = "Port of the ClusterController")
-        private int clientNetPort = -1;
+        private int clientNetPort = 1098;
 
         @Argument
         private List<String> arguments = new ArrayList<String>();

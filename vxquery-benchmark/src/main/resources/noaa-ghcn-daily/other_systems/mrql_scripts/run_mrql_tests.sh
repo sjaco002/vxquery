@@ -17,9 +17,12 @@
 # limitations under the License.
 #
 
+# Examples
+# run_mrql_tests.sh mrql_all/ 1 2
+
 NODES=${2}
 REPEAT=${3}
-DATASET="hcn"
+DATASET="all"
 
 
 for j in $(find ${1} -name '*q??.mrql')
